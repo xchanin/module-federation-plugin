@@ -18,15 +18,21 @@ export const APP_ROUTES: Routes = [
 
   // Your route here:
 
+  /**
+   * Load Angular module, need to have the same versions
+   */
   {
     path: 'flights',
     loadChildren: () =>
       loadRemoteModule({
         type: 'manifest',
         remoteName: 'mfe1',
-        exposedModule: './Module',
+        exposedModule: './MFEModule',
       }).then((m) => m.FlightsModule),
   },
+  /**
+   * Load web component
+   */
   {
     path: 'react',
     component: WebComponentWrapper,
@@ -51,7 +57,18 @@ export const APP_ROUTES: Routes = [
       elementName: 'angular3-element',
     } as WebComponentWrapperOptions,
   },
-
+  {
+    path: 'angular-test',
+    component: WebComponentWrapper,
+    data: {
+      type: 'script',
+      remoteEntry:
+        'http://localhost:8558/remoteEntry.js',
+      remoteName: 'angulartest',
+      exposedModule: './web-components',
+      elementName: 'angulartest-element',
+    } as WebComponentWrapperOptions,
+  },
   {
     path: '**',
     component: NotFoundComponent,
